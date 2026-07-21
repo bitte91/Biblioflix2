@@ -1,0 +1,6 @@
+{
+  "name": "BIBLIOFLIX - Biblioteca & Streaming de Leitura",
+  "description": "Plataforma de streaming literário e biblioteca digital com leitor imersivo, Bíblia Sagrada, inteligência artificial integrada, geração de imagens/vídeos e acervo público.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
