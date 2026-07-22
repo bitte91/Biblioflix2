@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewMode } from '../types/index';
+import { ViewMode } from '../types';
 
 interface SidebarProps {
   currentView: ViewMode;

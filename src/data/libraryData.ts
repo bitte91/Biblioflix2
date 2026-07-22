@@ -528,6 +528,91 @@ export const BOOKS_DATABASE: Book[] = [
       },
     ],
   },
+
+  // 11. DOM CASMURRO
+  {
+    id: 'dom-casmurro',
+    title: 'Dom Casmurro',
+    author: 'Machado de Assis',
+    year: '1899',
+    category: 'Clássicos & Mistério',
+    type: 'book',
+    coverUrl: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=800',
+    rating: 4.9,
+    ratingCount: '62.3k',
+    synopsis: 'O clássico de Machado de Assis onde Bento Santiago relata a sua vida e lança a dúvida imortal: Capitu traiu ou não traiu?',
+    aiInsights: 'Um estudo fascinante sobre o ciúme, a memória e a ambiguidade na literatura realista.',
+    readingTime: '8h 30m',
+    format: 'Livro Clássico de Domínio Público',
+    tags: ['Clássico', 'Romance', 'Realismo', 'Brasil'],
+    audioDuration: '9h 20m',
+    chapters: [
+      {
+        number: 1,
+        title: 'Capítulo 1 - Do Título',
+        content: [
+          'Uma noite destas, vindo da cidade para o Engenho Novo, encontrei no trem da Central um rapaz aqui do bairro, que eu conheço de vista e de chapéu.',
+          'Cumprimentou-me, sentou-se ao pé de mim, falou da lua e dos ministros, e acabou recitando-me versos. A viagem era curta, e os versos pode ser que não fossem inteiramente maus. Sucedeu, porém, que, como eu estava cansado, fechei os olhos três ou quatro vezes; tanto bastou para que ele interrompesse a leitura e metesse os versos no bolso.',
+          '— Continue, disse eu acordando.',
+          '— Já acabei, murmurou ele.',
+          '— São muito bonitos.',
+          'Vi-lhe fazer um gesto para tirá-los outra vez do bolso, mas não passou do gesto; estava amuado. No dia seguinte entrou a dizer de mim nomes feios, e acabou alcunhando-me Dom Casmurro.',
+          'Os vizinhos, que não gostam dos meus hábitos reclusos e calados, deram curso à alcunha, que afinal pegou. Nem por isso me zanguei. Contei a anedota aos amigos da cidade, e eles, por graça, chamam-me assim, alguns em bilhetes: "Dom Casmurro, domingo vou jantar com você".'
+        ],
+      },
+      {
+        number: 2,
+        title: 'Capítulo 2 - Do Livro',
+        content: [
+          'Ora, como tudo cansa, esta monotonia acabou por exaurir-me também. Quis variar, e lembrei-me de escrever um livro.',
+          'Jurisprudência, filosofia e política acudiram-me, mas não me acharam cara. Depois, pensei em fazer uma História dos Subúrbios, menos seca que as memórias do padre Luís Gonçalves dos Santos, relativas à cidade; era obra modesta, mas exigia documentos e datas, como preliminar, tudo o que não tinha, nem poderia ter sem grande esforço.',
+          'Foi então que os bustos pintados nas paredes entraram a falar-me e a dizer-me que, uma vez que eles não alcançavam reconstituir-me os tempos idos, pegasse da pena e contasse alguns.',
+          'O meu fim evidente era atar as duas pontas da vida, e restaurar na velhice a adolescência. Pois, senhor, não consegui recompor o que foi nem o que fui. Em tudo, se o rosto é igual, a fisionomia é diferente.',
+        ],
+      },
+    ],
+  },
+
+  // 12. O GUARANI
+  {
+    id: 'o-guarani',
+    title: 'O Guarani',
+    author: 'José de Alencar',
+    year: '1857',
+    category: 'Clássicos & Mistério',
+    type: 'book',
+    coverUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=800',
+    rating: 4.7,
+    ratingCount: '28.1k',
+    synopsis: 'Romance histórico do romantismo brasileiro que narra o amor entre a portuguesa Ceci e o índio Peri no Brasil colonial do século XVII.',
+    aiInsights: 'Um marco do Indianismo na literatura brasileira, construindo o mito do herói nacional indígena.',
+    readingTime: '10h 15m',
+    format: 'Livro Clássico de Domínio Público',
+    tags: ['Clássico', 'Romantismo', 'Indianismo', 'Brasil'],
+    audioDuration: '12h 05m',
+    chapters: [
+      {
+        number: 1,
+        title: 'Capítulo 1 - O Cenário',
+        content: [
+          'De um dos cabeços da Serra dos Órgãos desliza um fio de água que se dirige para o norte, e engrossado com os mananciais, que recebe no seu curso de dez léguas, torna-se rio respeitável.',
+          'É o Paquequer: saltando de cascata em cascata, enroscando-se como uma serpente, vai depois se espreguiçar na várzea e embeber no Paraíba, que rola majestosamente em seu vasto leito.',
+          'Dir-se-ia que, vassalo e tributário desse rei das águas, o pequeno rio, altivo e sobranceiro contra os rochedos, curva-se humildemente aos pés do suserano.',
+          'Neste ponto as margens descem em declive suave; o leito abre-se e avança sobre as barreiras que o contêm, formando uma bacia espaçosa, em que a água descansa depois de sua corrida precipite, para depois se deitar languidamente no Paraíba.',
+        ],
+      },
+      {
+        number: 2,
+        title: 'Capítulo 2 - D. Antônio de Mariz',
+        content: [
+          'D. Antônio de Mariz, fidalgo português, dos que mais se distinguiram nas guerras coloniais, havia recebido de el-rei um vasto trato de terras nos sertões do Brasil.',
+          'Aborrecido das intrigas da corte e das vexações de governadores, resolvera internar-se com sua família, buscando naquela solidão um asilo tranquilo, onde pudesse viver independente, quase como um soberano, segundo o foro e o estilo dos antigos barões feudais.',
+          'Edificou a sua casa num vale ameno, circundado de florestas virgens, e ali plantou e povoou as suas terras, estabelecendo uma pequena colônia de portugueses, mamelucos e índios domesticados, que o respeitavam como a um pai.',
+          'A sua morada, construída com solidez e vastidão, tinha todas as comodidades possíveis naqueles lugares e naqueles tempos. Era uma espécie de castelo de madeira e pedra-sabão, assentado sobre uma elevação, que dominava o vale do Paquequer.',
+        ],
+      },
+    ],
+  },
 ];
 
 export const initialLibrary = BOOKS_DATABASE;

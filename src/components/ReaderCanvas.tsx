@@ -79,15 +79,17 @@ export const ReaderCanvas: React.FC<ReaderCanvasProps> = ({
   };
 
   // Call Express Gemini API endpoint
-  const askGemini = async (prompt: string, context?: string) => {
+  const askGemini = async (prompt: string, mode?: string, context?: string) => {
     setIsAiLoading(true);
     try {
-      const res = await fetch('/api/ai/chat', {
+      const textToUse = context || selectedText || currentChapter.verses?.map((v) => v.text).join(' ') || currentChapter.content?.join(' ');
+      const res = await fetch('/api/ai/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           prompt,
-          contextText: context || selectedText || currentChapter.verses?.map((v) => v.text).join(' ') || currentChapter.content?.join(' '),
+          mode,
+          selectedText: textToUse,
           systemInstruction: `Você é a Biblioflix AI, um assistente teológico e literário erudito, empático e claro. Responda em Português sobre o livro "${book.title}".`,
         }),
       });
@@ -108,23 +110,23 @@ export const ReaderCanvas: React.FC<ReaderCanvasProps> = ({
   // Quick AI Actions
   const handleQuickAction = (actionType: 'resumir' | 'citar' | 'traduzir' | 'questionario') => {
     const textToUse = selectedText || `Capítulo ${currentChapter.number}: ${currentChapter.title || ''}`;
-    let prompt = '';
+    let mode = '';
 
     if (actionType === 'resumir') {
-      prompt = `Faça um resumo analítico, claro e direto em tópicos do trecho a seguir:`;
+      mode = 'summarize';
     } else if (actionType === 'citar') {
-      prompt = `Gere uma citação acadêmica formatada (ABNT/APA e citação bíblica formal se aplicável) do trecho:`;
+      mode = 'cite';
     } else if (actionType === 'traduzir') {
-      prompt = `Forneça a tradução detalhada para o Inglês e Espanhol (e analise o significado original em Hebraico/Grego se for texto bíblico):`;
+      mode = 'translate';
     } else if (actionType === 'questionario') {
-      prompt = `Crie 3 perguntas e respostas de estudo bíblico/compreensão de leitura sobre o seguinte trecho:`;
+      mode = 'quiz';
     }
 
     setAiChatMessages((prev) => [
       ...prev,
       { sender: 'user', text: `[Ação Rápida: ${actionType.toUpperCase()}] ${textToUse.slice(0, 100)}...` },
     ]);
-    askGemini(prompt, textToUse);
+    askGemini('', mode, textToUse);
     setShowAiSidebar(true);
     setSelectionPosition(null);
   };
@@ -148,25 +150,49 @@ export const ReaderCanvas: React.FC<ReaderCanvasProps> = ({
     setNoteText('');
   };
 
-  // Text-to-speech for chapter
+  // Text-to-speech for chapter using chunks to avoid synthesis limits
   const toggleSpeech = () => {
     if (isSpeaking) {
       window.speechSynthesis.cancel();
       setIsSpeaking(false);
     } else {
-      const fullText =
-        currentChapter.verses?.map((v) => `${v.number}. ${v.text}`).join(' ') ||
-        currentChapter.content?.join(' ') ||
-        '';
+      let chunks: string[] = [];
 
-      const utterance = new SpeechSynthesisUtterance(fullText);
-      utterance.lang = 'pt-BR';
-      utterance.rate = 1.0;
-      utterance.onend = () => setIsSpeaking(false);
-      utterance.onerror = () => setIsSpeaking(false);
+      if (currentChapter.verses && currentChapter.verses.length > 0) {
+        chunks = currentChapter.verses.map((v) => `${v.text}`);
+      } else if (currentChapter.content && currentChapter.content.length > 0) {
+        chunks = [...currentChapter.content];
+      } else {
+        return;
+      }
 
-      window.speechSynthesis.speak(utterance);
       setIsSpeaking(true);
+      let currentIndex = 0;
+
+      const speakNextChunk = () => {
+        if (currentIndex >= chunks.length || !isSpeaking) {
+          setIsSpeaking(false);
+          return;
+        }
+
+        const utterance = new SpeechSynthesisUtterance(chunks[currentIndex]);
+        utterance.lang = 'pt-BR';
+        utterance.rate = 1.0;
+
+        utterance.onend = () => {
+          currentIndex++;
+          speakNextChunk();
+        };
+
+        utterance.onerror = (e) => {
+          console.error("SpeechSynthesisUtterance error", e);
+          setIsSpeaking(false);
+        };
+
+        window.speechSynthesis.speak(utterance);
+      };
+
+      speakNextChunk();
     }
   };
 
@@ -175,6 +201,14 @@ export const ReaderCanvas: React.FC<ReaderCanvasProps> = ({
       window.speechSynthesis.cancel();
     };
   }, []);
+
+  // Update effect to stop speech if chapter changes while playing
+  useEffect(() => {
+    if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        setIsSpeaking(false);
+    }
+  }, [chapterIndex]);
 
   // Paper styling class
   const getPaperBg = () => {
@@ -543,7 +577,7 @@ export const ReaderCanvas: React.FC<ReaderCanvasProps> = ({
                   const text = aiInput.trim();
                   setAiChatMessages((prev) => [...prev, { sender: 'user', text }]);
                   setAiInput('');
-                  askGemini(text);
+                  askGemini(text, undefined, undefined);
                 }}
                 className="flex items-center gap-2"
               >

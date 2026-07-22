@@ -51,6 +51,8 @@ app.post('/api/ai/ask', async (req, res) => {
       finalPrompt = `Traduza com precisão para o português (ou do português para o inglês se já estiver em português) preservando o tom literário e elegante do trecho:\n\n"${selectedText}"`;
     } else if (mode === 'quiz') {
       finalPrompt = `Com base no seguinte texto, crie um questionário interativo de 3 perguntas para reflexão e teste de conhecimento com alternativas e gabarito comentado:\n\n"${selectedText || prompt}"`;
+    } else if (selectedText) {
+      finalPrompt = `Contexto do texto (trecho ou capítulo selecionado):\n"${selectedText}"\n\nCom base no contexto acima, responda à solicitação do usuário: ${prompt}`;
     }
 
     const config: any = {
