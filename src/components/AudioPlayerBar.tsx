@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { Book, Chapter } from '../data/libraryData';
 
 interface AudioPlayerBarProps {
-  title: string;
-  subtitle: string;
-  coverImage?: string;
+  currentBook: Book | null;
+  currentChapter: Chapter | null;
+  isPlaying: boolean;
+  onTogglePlay: () => void;
 }
 
 export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
-  title,
-  subtitle,
-  coverImage,
+  currentBook,
+  currentChapter,
+  isPlaying,
+  onTogglePlay,
 }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(35);
   const [isMuted, setIsMuted] = useState(false);
 
@@ -24,6 +26,12 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
     }
     return () => clearInterval(interval);
   }, [isPlaying]);
+
+  if (!currentBook) return null;
+
+  const title = currentBook.title;
+  const subtitle = currentChapter ? `${currentChapter.number}. ${currentChapter.title || ''}` : currentBook.author;
+  const coverImage = currentBook.coverUrl;
 
   return (
     <footer id="audio-player-bar" className="fixed bottom-0 left-0 right-0 z-40 h-20 bg-black/90 backdrop-blur-xl border-t border-white/10 px-4 md:px-8 flex items-center justify-between">
@@ -50,7 +58,7 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
           </button>
 
           <button
-            onClick={() => setIsPlaying(!isPlaying)}
+            onClick={onTogglePlay}
             className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-white/10"
             title={isPlaying ? 'Pausar' : 'Reproduzir Áudio'}
           >
